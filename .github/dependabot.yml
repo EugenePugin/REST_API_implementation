@@ -1,13 +1,13 @@
 version: 2
 updates:
-  # Настройка автообновлений для Go (go.mod)
+  # Auto-update configuration for Go (go.mod)
   - package-ecosystem: "gomod"
-    directory: "/"                  # Корень репозитория, где лежит go.mod
+    directory: "/"                  # Repository root where go.mod is located
     schedule:
-      interval: "weekly"            # Проверять обновления раз в неделю
+      interval: "weekly"            # Check for updates once a week
 
-  # Настройка автообновлений для TypeSpec (npm / package.json)
+  # Auto-update configuration for TypeSpec (npm / package.json)
   - package-ecosystem: "npm"
-    directory: "/api/typespec"      # Путь к папке, где лежит package.json
+    directory: "/api/typespec"      # Path to the directory where package.json is located
     schedule:
-      interval: "weekly"            # Проверять обновления раз в неделю
+      interval: "weekly"            # Check for updates once a week
