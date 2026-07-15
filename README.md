@@ -16,3 +16,4 @@ How to run:
 # ToDo:
 - to implement API first approach (for now it is Code First)
 - to implement throttling middleware
+- to adopt Prism for integration tests development
