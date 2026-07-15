@@ -12,3 +12,7 @@ How to run:
    _curl.exe http://localhost:8080/api/v1/products/41_  
    _curl.exe http://localhost:8080/api/v1/users_  
    _curl.exe -H "Authorization: secret-token" http://localhost:8080/api/v1/users/7/orders_  
+
+# ToDo:
+- to implement API first approach (for now it is Code First)
+- to implement throttling middleware
