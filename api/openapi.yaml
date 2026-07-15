@@ -1,0 +1,181 @@
+openapi: 3.0.0
+info:
+  title: E-Commerce REST API Demo
+  version: 1.0.0
+tags:
+  - name: Products
+  - name: Users
+  - name: Orders
+paths:
+  /api/v1/products:
+    get:
+      operationId: Products_list
+      description: Получить список всех товаров
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+      tags:
+        - Products
+  /api/v1/products/{id}:
+    get:
+      operationId: Products_get
+      description: Получить информацию о товаре по его ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+      tags:
+        - Products
+  /api/v1/users:
+    get:
+      operationId: Users_list
+      description: Получить список всех пользователей
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      tags:
+        - Users
+      security:
+        - CustomAuth: []
+  /api/v1/users/{id}:
+    get:
+      operationId: Users_get
+      description: Получить профиль пользователя по его ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      tags:
+        - Users
+      security:
+        - CustomAuth: []
+  /api/v1/users/{id}/orders:
+    get:
+      operationId: Users_listOrders
+      description: Получить заказы конкретного пользователя
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOrders'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      tags:
+        - Users
+        - Orders
+      security:
+        - CustomAuth: []
+components:
+  schemas:
+    Product:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Идентификатор товара
+        name:
+          type: string
+          description: Название товара
+    UnauthorizedError:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          enum:
+            - Unauthorized
+    User:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: Идентификатор пользователя
+        name:
+          type: string
+          description: Имя пользователя
+    UserOrders:
+      type: object
+      required:
+        - user_id
+        - orders
+      properties:
+        user_id:
+          type: string
+          description: Идентификатор пользователя, сделавшего заказ
+        orders:
+          type: array
+          items:
+            type: string
+          description: Список названий заказов
+  securitySchemes:
+    CustomAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+servers:
+  - url: http://localhost:8080
+    description: Локальный сервер разработки
+    variables: {}
